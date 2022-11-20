@@ -1,7 +1,8 @@
 import React from 'react';
-import {useHeathCheck} from '../../queries/useHeathCheckQuery';
+import {useHealthCheck} from '../../queries/useHealthCheckQuery';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import {useNavigate} from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -38,9 +39,12 @@ const LoadingContainer = styled.div`
   flex-direction: column;
   gap: 16px;
 `;
-const HeathCheck: React.FC = () => {
-  const {data: heathIsOk, isFetching, refetch} = useHeathCheck();
+const HealthCheck: React.FC = () => {
+  const {data: healthIsOk, isFetching, refetch} = useHealthCheck();
 
+  const navigate = useNavigate();
+
+  if (healthIsOk) navigate('/questions');
   return (
     <Container>
       {isFetching && (
@@ -49,7 +53,7 @@ const HeathCheck: React.FC = () => {
         </LoadingContainer>
       )}
 
-      {heathIsOk === false && (
+      {healthIsOk === false && (
         <SomethingWrong>
           Something wrong. Please try again later.
           <RetryButtonContainer>
@@ -61,4 +65,4 @@ const HeathCheck: React.FC = () => {
   );
 };
 
-export default HeathCheck;
+export default HealthCheck;
