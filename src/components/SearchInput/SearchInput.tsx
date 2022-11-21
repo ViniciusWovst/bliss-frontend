@@ -1,15 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {FaSearch} from 'react-icons/fa';
 
-const InputStyled = styled.input`
-  padding: 6px 0 7px;
+type InputStyledProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  fullWidth?: boolean;
+};
+const InputStyled = styled.input<InputStyledProps>`
+  padding: 6px 7px;
   background-color: transparent;
   border: none;
   width: 200px;
   transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
   :focus {
     outline: none;
+    width: 300px;
   }
   color: currentColor;
   font-weight: bold;
@@ -17,9 +21,11 @@ const InputStyled = styled.input`
     color: currentColor;
     opacity: 0.42;
   }
-  :focus {
-    width: 300px;
-  }
+  ${(props) =>
+    props.fullWidth &&
+    css`
+      width: 300px;
+    `};
 `;
 
 const Container = styled.div`
@@ -34,14 +40,18 @@ const SearchIcon = styled(FaSearch)`
   padding: 10px;
 `;
 
-type InputSearchProps = React.InputHTMLAttributes<HTMLInputElement>;
-const InputSearch: React.FC<InputSearchProps> = (props) => {
+type SearchInputProps = React.InputHTMLAttributes<HTMLInputElement>;
+const SearchInput: React.FC<SearchInputProps> = (props) => {
   return (
     <Container>
       <SearchIcon />
-      <InputStyled type="search" {...props} />
+      <InputStyled
+        type="search"
+        {...props}
+        fullWidth={props.value !== undefined && props.value !== ''}
+      />
     </Container>
   );
 };
 
-export default InputSearch;
+export default SearchInput;

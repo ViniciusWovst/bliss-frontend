@@ -58,20 +58,17 @@ const Questions: React.FC = () => {
     queryParams.limit,
     queryParams.offset,
     queryParams.filter,
-    {
-      keepPreviousData: true,
-      cacheTime: 0,
-      staleTime: 0,
-    },
   );
-  console.log(QuestionsData?.length);
+  const urlQueryParams = new URLSearchParams(window.location.search);
+
+  const filter = urlQueryParams.get('filter') || '';
 
   return (
     <Container>
       <Toolbar>
         <div style={{display: 'flex', gap: 16, alignItems: 'center'}}>
           Questions
-          <QuestionSearch />
+          <QuestionSearch value={filter} />
         </div>
       </Toolbar>
       <QuestionContainer>

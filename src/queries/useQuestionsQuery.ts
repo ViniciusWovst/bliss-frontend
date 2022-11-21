@@ -16,3 +16,14 @@ export const useFetchQuestions = (
     configOptions,
   );
 };
+
+export const useFetchQuestionsSearch = (
+  filter: string = '',
+  configOptions?: UseQueryOptions<Question[], Error>,
+): UseQueryResult<Question[], Error> => {
+  return useQuery<Question[], Error>(
+    'questionsSearch',
+    () => getQuestions(QUESTION_LIMIT, QUESTION_OFFSET, filter),
+    configOptions,
+  );
+};
