@@ -48,7 +48,7 @@ const SearchInput: React.FC<SearchInputProps> = (props) => {
       <InputStyled
         type="search"
         {...props}
-        fullWidth={props.value !== undefined && props.value !== ''}
+        fullWidth={props.value !== undefined || props.value !== ''}
       />
     </Container>
   );

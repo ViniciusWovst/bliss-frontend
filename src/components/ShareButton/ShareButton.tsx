@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import styled, {css} from 'styled-components';
 import {FaShareAlt} from 'react-icons/fa';
 import Button from '../Button';
@@ -36,18 +36,6 @@ const InputStyled = styled.input<InputProps>`
     `};
 `;
 
-type LabelInputProps = React.InputHTMLAttributes<HTMLSpanElement> & {
-  open?: boolean;
-};
-const LabelInput = styled.span<LabelInputProps>`
-  display: none;
-  ${(props) =>
-    props.open &&
-    css`
-      display: block;
-    `};
-`;
-
 const InputContainer = styled.div`
   display: flex;
   gap: 6px;
@@ -59,6 +47,9 @@ const StyledButton = styled(Button)`
   height: 30px;
   min-width: 0px;
   padding: 0px;
+  :hover {
+    background-color: #c6c6c6;
+  }
 `;
 
 type ShareButtonProps = {
@@ -76,21 +67,32 @@ const ShareButton: React.FC<ShareButtonProps> = ({
   const handleShareClick = async () => {
     if (open) {
       const shared = await shareLink(inputValue, urlToShare);
+      setOpen(false);
+      setInputValue('');
 
       if (shared && onShared) {
         onShared();
       }
-    } else setOpen(true);
+    } else {
+      inputRef.current?.focus();
+      setOpen(true);
+    }
   };
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <Container>
       <div style={{display: 'flex', flexDirection: 'column', gap: 6}}>
-        <LabelInput open={open}> Share your search</LabelInput>
         <InputContainer>
           <InputStyled
+            ref={inputRef}
+            onBlur={() => {
+              if (inputValue === '') setOpen(false);
+            }}
             open={open}
             {...inputProps}
+            value={inputValue}
             onChange={(event) => setInputValue(event.target.value)}
           />
           <StyledButton

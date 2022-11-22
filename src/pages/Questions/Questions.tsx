@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Toolbar from '../../components/Toolbar';
 import Button from '../../components/Button';
 import QuestionSearch from './QuestionSearch';
+import {useNavigate} from 'react-router-dom';
 
 const Container = styled.div`
   padding-top: 60px;
@@ -63,6 +64,8 @@ const Questions: React.FC = () => {
 
   const filter = urlQueryParams.get('filter') || '';
 
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Toolbar>
@@ -73,7 +76,10 @@ const Questions: React.FC = () => {
       </Toolbar>
       <QuestionContainer>
         {QuestionsData?.map((question, index) => (
-          <QuestionItem key={index}>
+          <QuestionItem
+            key={index}
+            onClick={() => navigate(`/questions/${question.id}`)}
+          >
             <img src={question.thumb_url} width={90} height={90} />
 
             <div>

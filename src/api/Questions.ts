@@ -23,3 +23,13 @@ export const getQuestions = async (
   );
   return res.data;
 };
+
+export const getQuestion = async (questionId: string): Promise<Question> => {
+  const res = await axios.get(`questions/${questionId}`);
+  return res.data;
+};
+
+export const updateQuestion = async (question: Question): Promise<Question> => {
+  const res = await axios.put(`questions/${question.id}`, question);
+  return res.data;
+};
