@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   useFetchQuestions,
   QUESTION_LIMIT,
@@ -6,7 +6,7 @@ import {
 } from '../../queries/useQuestionsQuery';
 import styled from 'styled-components';
 import Toolbar from '../../components/Toolbar';
-import Button from '../../components/Button';
+
 import QuestionSearch from './QuestionSearch';
 import {useNavigate} from 'react-router-dom';
 
@@ -42,23 +42,11 @@ const PublishedAt = styled.div`
   color: gray;
 `;
 
-type QuestionQueryParam = {
-  limit: number;
-  offset: number;
-  filter: string;
-};
-
 const Questions: React.FC = () => {
-  const [queryParams, setQueryParams] = useState<QuestionQueryParam>({
-    limit: QUESTION_LIMIT,
-    offset: QUESTION_OFFSET,
-    filter: '',
-  });
-
   const {data: QuestionsData} = useFetchQuestions(
-    queryParams.limit,
-    queryParams.offset,
-    queryParams.filter,
+    QUESTION_LIMIT,
+    QUESTION_OFFSET,
+    '',
   );
   const urlQueryParams = new URLSearchParams(window.location.search);
 
@@ -89,18 +77,6 @@ const Questions: React.FC = () => {
           </QuestionItem>
         ))}
       </QuestionContainer>
-      <Button
-        onClick={() =>
-          setQueryParams((params) => {
-            return {
-              ...params,
-              offset: params.offset + QUESTION_OFFSET,
-            };
-          })
-        }
-      >
-        See more
-      </Button>
     </Container>
   );
 };

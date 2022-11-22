@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import {FaTimes} from 'react-icons/fa';
 
 import ShareButton from '../../../components/ShareButton';
+import {useNavigate} from 'react-router-dom';
 
 const DEBOUNCE_TIME = 1000;
 
@@ -73,12 +74,21 @@ const QuestionSearch: React.FC<QuestionSearchProps> = ({value = ''}) => {
       window.location.pathname + updatedUrl,
     );
   };
+
+  const clearSearch = () => {
+    setInputValue('');
+    setSearchValue('');
+    updateUrl('');
+  };
+
   const debouncedSearch = React.useRef(
     debounce((text) => {
       setSearchValue(text);
       updateUrl(text);
     }, DEBOUNCE_TIME),
   ).current;
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -96,9 +106,7 @@ const QuestionSearch: React.FC<QuestionSearchProps> = ({value = ''}) => {
             Search
             <CloseButtonContainer
               onClick={() => {
-                setInputValue('');
-                setSearchValue('');
-                updateUrl('');
+                clearSearch();
               }}
             >
               <CloseIcon />
@@ -111,7 +119,13 @@ const QuestionSearch: React.FC<QuestionSearchProps> = ({value = ''}) => {
 
           {QuestionsData?.map((question, index) => {
             return (
-              <QuestionResultItem key={index}>
+              <QuestionResultItem
+                key={index}
+                onClick={() => {
+                  clearSearch();
+                  navigate(`/questions/${question.id}`);
+                }}
+              >
                 {question.question}
               </QuestionResultItem>
             );
