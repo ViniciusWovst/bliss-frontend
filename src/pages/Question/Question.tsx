@@ -77,7 +77,7 @@ const ChoiceBox = styled.div`
   margin-bottom: 10px;
   border: 1px solid lightgray;
   border-radius: 4px;
-  padding: 8px;
+  padding: 8px 12px;
 `;
 
 type ChoiceSelected = {index: number; votes: number};
