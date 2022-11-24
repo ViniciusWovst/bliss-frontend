@@ -1,5 +1,5 @@
 import {UseQueryResult, useQuery, UseQueryOptions} from 'react-query';
-import {getQuestions, Question, getQuestion} from '../api/Questions';
+import {getQuestions, Question} from '../api/Questions';
 
 export const QUESTION_OFFSET = 10;
 export const QUESTION_LIMIT = 10;
@@ -24,17 +24,6 @@ export const useFetchQuestionsSearch = (
   return useQuery<Question[], Error>(
     'questionsSearch',
     () => getQuestions(QUESTION_LIMIT, QUESTION_OFFSET, filter),
-    configOptions,
-  );
-};
-
-export const useFetchQuestion = (
-  questionId: string,
-  configOptions?: UseQueryOptions<Question, Error>,
-): UseQueryResult<Question, Error> => {
-  return useQuery<Question, Error>(
-    'question' + questionId,
-    () => getQuestion(questionId),
     configOptions,
   );
 };

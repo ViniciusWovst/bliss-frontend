@@ -54,25 +54,24 @@ const StyledButton = styled(Button)`
 
 type ShareButtonProps = {
   urlToShare: string;
-  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
-  onShared?: () => void;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement> & {
+    'data-testid'?: string;
+  };
+
+  'data-testid'?: string;
 };
 const ShareButton: React.FC<ShareButtonProps> = ({
   urlToShare,
   inputProps,
-  onShared,
+  ...props
 }) => {
   const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const handleShareClick = async () => {
     if (open) {
-      const shared = await shareLink(inputValue, urlToShare);
+      await shareLink(inputValue, urlToShare);
       setOpen(false);
       setInputValue('');
-
-      if (shared && onShared) {
-        onShared();
-      }
     } else {
       inputRef.current?.focus();
       setOpen(true);
@@ -98,6 +97,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({
           <StyledButton
             onClick={handleShareClick}
             disabled={open && !validateEmail(inputValue)}
+            {...props}
           >
             <FaShareAlt />
           </StyledButton>

@@ -59,13 +59,14 @@ const Questions: React.FC = () => {
       <Toolbar>
         <div style={{display: 'flex', gap: 16, alignItems: 'center'}}>
           Questions
-          <QuestionSearch value={filter} />
+          <QuestionSearch value={filter} data-testid="questionSearchInput" />
         </div>
       </Toolbar>
       <QuestionContainer>
         {QuestionsData?.map((question, index) => (
           <QuestionItem
             key={index}
+            data-testid={`questionItem-${index}`}
             onClick={() => navigate(`/questions/${question.id}`)}
           >
             <img src={question.thumb_url} width={90} height={90} />

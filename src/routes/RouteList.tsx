@@ -9,7 +9,6 @@ import {useOnlineStatus} from '../context/OnlineStatusContext';
 
 const RouteList: React.FC = () => {
   const isOnline = useOnlineStatus();
-  console.log('isOnline ', isOnline);
   if (!isOnline) {
     return <NoConnection />;
   }

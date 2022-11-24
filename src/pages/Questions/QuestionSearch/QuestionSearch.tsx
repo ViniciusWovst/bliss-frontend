@@ -57,8 +57,11 @@ const CloseIcon = styled(FaTimes)`
   }
 `;
 
-type QuestionSearchProps = {value?: string};
-const QuestionSearch: React.FC<QuestionSearchProps> = ({value = ''}) => {
+type QuestionSearchProps = {value?: string; 'data-testid'?: string};
+const QuestionSearch: React.FC<QuestionSearchProps> = ({
+  value = '',
+  ...props
+}) => {
   const [inputValue, setInputValue] = useState(value);
   const [searchValue, setSearchValue] = useState(value);
 
@@ -99,12 +102,14 @@ const QuestionSearch: React.FC<QuestionSearchProps> = ({value = ''}) => {
           setInputValue(event.target.value);
           debouncedSearch(event.target.value);
         }}
+        {...props}
       />
       {QuestionsData && searchValue && (
-        <ResultContainer>
+        <ResultContainer data-testid="questionSearchContainer">
           <HeaderContainer>
             Search
             <CloseButtonContainer
+              data-testid="questionSearchCloseButton"
               onClick={() => {
                 clearSearch();
               }}

@@ -104,6 +104,7 @@ const Question: React.FC = () => {
   const handleVoteClick = (question: QuestionType) => {
     updateQuestion(question);
   };
+
   return (
     <Container>
       <Toolbar>
@@ -140,6 +141,7 @@ const Question: React.FC = () => {
                   >
                     {choice.votes} votes
                     <IconButton
+                      data-testid={`voteButton-${index}`}
                       onClick={() => {
                         const questionUpdate = Object.assign({}, question);
                         const newChoiceSelected = {
