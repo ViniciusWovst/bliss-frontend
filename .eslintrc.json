@@ -1,0 +1,49 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "google", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "prettier/prettier": ["error",{
+          "endOfLine": "auto"}
+        ],
+        "@typescript-eslint/explicit-module-boundary-types": [
+          "error"
+        ]
+      }
+    }],
+    
+  "rules": {
+    "prettier/prettier": "error",
+    "react/prop-types": 0,
+    "unicorn/consistent-function-scoping": 0,
+    "unicorn/filename-case": 0,
+    "unicorn/no-nested-ternary": 0,
+    "unicorn/prefer-spread": 0,
+    "unicorn/no-null": 0,
+    "react-perf/jsx-no-new-function-as-prop": 0,
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
+    "click-events-have-key-events": "off",
+    "@typescript-eslint/no-magic-numbers": [
+      "error",
+      {
+        "ignoreArrayIndexes": true,
+        "ignore": [-1, 0, 1]
+      }
+    ]
+  }
+}
