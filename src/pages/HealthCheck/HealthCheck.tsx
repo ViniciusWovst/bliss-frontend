@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHealthCheck} from '../../queries/useHealthCheckQuery';
 import styled from 'styled-components';
 import Button from '../../components/Button';
@@ -44,7 +44,10 @@ const HealthCheck: React.FC = () => {
 
   const navigate = useNavigate();
 
-  if (healthIsOk) navigate('/questions');
+  useEffect(() => {
+    if (healthIsOk) navigate('/questions');
+  }, [healthIsOk]);
+
   return (
     <Container>
       {isFetching && (
@@ -57,7 +60,9 @@ const HealthCheck: React.FC = () => {
         <SomethingWrong>
           Something wrong. Please try again later.
           <RetryButtonContainer>
-            <RetryButton onClick={() => refetch()}>Retry</RetryButton>
+            <RetryButton data-testid="retryButton" onClick={() => refetch()}>
+              Retry
+            </RetryButton>
           </RetryButtonContainer>
         </SomethingWrong>
       )}
